@@ -17,9 +17,8 @@ abstract class ViewModel extends ChangeNotifier {
     super.dispose();
   }
 
-  void update() {
-    notifyListeners();
-  }
+  @override
+  void notifyListeners() => super.notifyListeners();
 }
 
 extension StateHelpers on ViewModel {

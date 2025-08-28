@@ -14,7 +14,7 @@ class MutableViewModelState<T> implements ViewModelState<T> {
 
   set value(T newValue) {
     _value = newValue;
-    _model.update();
+    _model.notifyListeners();
   }
 
   @override
@@ -35,7 +35,7 @@ class MutableViewModelStateList<T> extends ListBase<T> {
     bool shouldNotify = newLength < _list.length;
     _list.length = newLength;
     if (shouldNotify) {
-      _model.update();
+      _model.notifyListeners();
     }
   }
 
@@ -45,6 +45,6 @@ class MutableViewModelStateList<T> extends ListBase<T> {
   @override
   void operator []=(int index, T value) {
     _list[index] = value;
-    _model.update();
+    _model.notifyListeners();
   }
 }
