@@ -9,6 +9,7 @@ import 'view_model.dart' show ViewModel;
 /// When instantiated via a [ViewModel], the state is immutable from the ViewModelState itself,
 /// but can be modified by other means, e.g. from a repository.
 abstract interface class ViewModelState<T> {
+  /// Gets the current value of the state.
   T get value;
 }
 
@@ -21,8 +22,12 @@ class MutableViewModelState<T> implements ViewModelState<T> {
   T _value;
   final ViewModel _model;
 
+  /// Creates a [MutableViewModelState] tied to the given [ViewModel].
+  /// The state is initialized with the provided [initial] value.
   MutableViewModelState(this._value, this._model);
 
+  /// Sets the value of the state to [newValue] and notifies the associated [ViewModel].
+  /// Reading the current value of the state can be done via the [value] property.
   set value(T newValue) {
     _value = newValue;
     _model.notifyListeners();
@@ -44,6 +49,8 @@ class MutableViewModelStateList<T> extends ListBase<T> {
   final List<T?> _list = [];
   final ViewModel _model;
 
+  /// Creates a [MutableViewModelStateList] tied to the given [ViewModel].
+  /// The list is initialized with the provided [initial] values.
   MutableViewModelStateList(this._model, [List<T> initial = const []]) {
     _list.addAll(initial);
   }
@@ -75,10 +82,18 @@ class MutableViewModelStateList<T> extends ListBase<T> {
   }
 }
 
+/// A mutable map state that holds a map of keys of type [K] and values of type [V].
+/// The map can be modified like a regular list, and any changes will notify
+/// the associated [ViewModel].
+///
+/// The map will notify the ViewModel whenever it is modified, allowing the ViewModel
+/// to notify its listeners.
 class MutableViewModelStateMap<K, V> extends MapBase<K, V> {
   final Map<K, V> _map = {};
   final ViewModel _model;
 
+  /// Creates a [MutableViewModelStateMap] tied to the given [ViewModel].
+  /// The map is initialized with the provided [initial] values.
   MutableViewModelStateMap(this._model, [Map<K, V> initial = const {}]) {
     _map.addAll(initial);
   }

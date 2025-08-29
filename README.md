@@ -212,7 +212,7 @@ void main() {
 }
 
 class MyApp extends ViewModelWidget<MyViewModel> {
-    const MyApp({super.key, super.create});
+    const MyApp({super.key, required super.create});
 
     @override
     Widget build(BuildContext context, MyViewModel viewModel) {
@@ -232,7 +232,7 @@ class MyApp extends ViewModelWidget<MyViewModel> {
 # 🧮 Example: Counter
 ```dart
 class MyViewModel extends ViewModel {
-    late final counter = createMutableState(0);
+  late final counter = createMutableState(0);
 }
 
 void main() {
@@ -245,12 +245,12 @@ void main() {
 }
 
 class MyApp extends ViewModelWidget<MyViewModel> {
-    const MyApp({super.key, super.create});
+    const MyApp({super.key, required super.create});
 
     @override
     Widget build(BuildContext context, MyViewModel viewModel) {
         return Scaffold(
-            home: Center(
+            body: Center(
                 child: Text("Counter: ${viewModel.counter.value}"),
             ),
             floatingActionButton: FloatingActionButton(
