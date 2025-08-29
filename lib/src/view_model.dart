@@ -83,11 +83,32 @@ extension StateHelpers on ViewModel {
   /// Example usage:
   /// ```dart
   /// class MyViewModel extends ViewModel {
-  ///    // Creates a mutable state of type int initialized to 0.
+  ///    // Creates a mutable list that is empty initially.
   ///   late final items = createMutableStateList<String>();
+  ///   // Creates a mutable list initialized with some values.
+  ///   late final numbers = createMutableStateList<int>([1, 2, 3]);
   /// }
-  MutableViewModelStateList<T> createMutableStateList<T>() {
-    return MutableViewModelStateList<T>(this);
+  MutableViewModelStateList<T> createMutableStateList<T>([List<T> initial = const []]) {
+    return MutableViewModelStateList<T>(this, initial);
+  }
+
+  /// Creates a mutable map state object that is tied to this ViewModel.
+  ///
+  /// The created map state can be manipulated like a regular map.
+  /// The type of the map elements is determined by the generic keys [K] and values [V].
+  /// The map state will notify listeners of changes and will be disposed of
+  /// when the ViewModel is disposed.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// class MyViewModel extends ViewModel {
+  ///    // Creates a mutable map that is empty initially.
+  ///   late final items = createMutableStateMap<String, String>();
+  ///   // Creates a mutable map initialized with some values.
+  ///   late final numbers = createMutableStateList<String, int>({"one": 1, "two": 2});
+  /// }
+  MutableViewModelStateMap<K, V> createMutableStateMap<K, V>([Map<K, V> initial = const {}]) {
+    return MutableViewModelStateMap<K, V>(this, initial);
   }
 
   /// Creates an (from the state itself) immutable state object that reflects the value of the given [notifier].

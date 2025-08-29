@@ -1,4 +1,4 @@
-import 'dart:collection' show ListBase;
+import 'dart:collection' show ListBase, MapBase;
 
 import 'view_model.dart' show ViewModel;
 
@@ -44,7 +44,9 @@ class MutableViewModelStateList<T> extends ListBase<T> {
   final List<T?> _list = [];
   final ViewModel _model;
 
-  MutableViewModelStateList(this._model);
+  MutableViewModelStateList(this._model, [List<T> initial = const []]) {
+    _list.addAll(initial);
+  }
 
   @override
   int get length => _list.length;
@@ -70,5 +72,44 @@ class MutableViewModelStateList<T> extends ListBase<T> {
   void operator []=(int index, T value) {
     _list[index] = value;
     _model.notifyListeners();
+  }
+}
+
+class MutableViewModelStateMap<K, V> extends MapBase<K, V> {
+  final Map<K, V> _map = {};
+  final ViewModel _model;
+
+  MutableViewModelStateMap(this._model, [Map<K, V> initial = const {}]) {
+    _map.addAll(initial);
+  }
+
+  @override
+  V? operator [](Object? key) => _map[key];
+
+  @override
+  void operator []=(K key, V value) {
+    _map[key] = value;
+    _model.notifyListeners();
+  }
+
+  @override
+  void clear() {
+    if (_map.isNotEmpty) {
+      _map.clear();
+      _model.notifyListeners();
+    }
+  }
+
+  @override
+  Iterable<K> get keys => _map.keys;
+
+  @override
+  V? remove(Object? key) {
+    if (_map.containsKey(key)) {
+      final removedValue = _map.remove(key);
+      _model.notifyListeners();
+      return removedValue;
+    }
+    return null;
   }
 }
