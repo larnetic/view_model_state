@@ -20,7 +20,7 @@ jobs:
         uses: dart-lang/setup-dart@v1
       
       - name: 📦 Install Dependencies
-        run: dart pub get
+        run: flutter pub get
 
       - name: 📝 Publish Package
         run: dart pub publish --force
