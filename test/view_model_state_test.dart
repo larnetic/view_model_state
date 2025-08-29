@@ -42,11 +42,24 @@ void main() {
       expect(list, isEmpty);
     });
 
+    test("List should initialize with values", () {
+      final viewModel = TestViewModel();
+      final list = viewModel.createMutableStateList<String>(["item1", "item2"]);
+      expect(list, ["item1", "item2"]);
+    });
+
     test("List should add an item", () {
       final viewModel = TestViewModel();
       final list = viewModel.createMutableStateList<String>();
       list.add("item1");
       expect(list, ["item1"]);
+    });
+
+    test("List should update an item", () {
+      final viewModel = TestViewModel();
+      final list = viewModel.createMutableStateList<String>(["item1"]);
+      list[0] = "updatedItem";
+      expect(list, ["updatedItem"]);
     });
 
     test("List should remove an item", () {
@@ -88,6 +101,73 @@ void main() {
       expect(list.length, 2);
       list.clear();
       expect(list.length, 0);
+    });
+  });
+
+  group("Test map mutable state", () {
+    test("Map should initialize empty", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>();
+      expect(map, isEmpty);
+    });
+
+    test("Map should initialize with values", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1", "key2": "value2"});
+      expect(map, {"key1": "value1", "key2": "value2"});
+    });
+
+    test("Map should add a key-value pair", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>();
+      map["key1"] = "value1";
+      expect(map, {"key1": "value1"});
+    });
+
+    test("Map should update a value", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1"});
+      map["key1"] = "updatedValue";
+      expect(map, {"key1": "updatedValue"});
+    });
+
+    test("Map should remove a key-value pair", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1", "key2": "value2"});
+      map.remove("key1");
+      expect(map, {"key2": "value2"});
+    });
+
+    test("Map should clear all key-value pairs", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1", "key2": "value2"});
+      expect(map, isNotEmpty);
+      map.clear();
+      expect(map, isEmpty);
+    });
+
+    test("Map should contain added keys", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>();
+      map["key1"] = "value1";
+      map["key2"] = "value2";
+      expect(map.containsKey("key1"), isTrue);
+      expect(map.containsKey("key2"), isTrue);
+      expect(map.containsKey("key3"), isFalse);
+    });
+
+    test("Map length should update correctly", () {
+      final viewModel = TestViewModel();
+      final map = viewModel.createMutableStateMap<String, String>();
+      expect(map.length, 0);
+      map["key1"] = "value1";
+      expect(map.length, 1);
+      map["key2"] = "value2";
+      expect(map.length, 2);
+      map.remove("key1");
+      expect(map.length, 1);
+      map.clear();
+      expect(map.length, 0);
     });
   });
 
