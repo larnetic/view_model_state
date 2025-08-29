@@ -23,6 +23,7 @@ and the Flutter guide for
     <a href="https://github.com/larnetic/view_model_state">
         <img src="https://img.shields.io/github/stars/larnetic/view_model_state">
     </a>
+    <img alt="Codecov" src="https://img.shields.io/codecov/c/github/larnetic/view_model_state">
     <img src="https://img.shields.io/pub/v/view_model_state">
     <img src="https://img.shields.io/github/license/larnetic/view_model_state">
 </p>
