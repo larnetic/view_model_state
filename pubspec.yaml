@@ -1,6 +1,6 @@
 name: view_model_state
 description: A Flutter package that provides a ViewModel base class with built-in state management capabilities.
-version: 0.0.1
+version: 0.0.3
 repository: https://github.com/larnetic/view_model_state
 issue_tracker: https://github.com/larnetic/view_model_state/issues
 
