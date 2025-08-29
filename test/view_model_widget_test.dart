@@ -16,7 +16,9 @@ class TestViewModelWidget extends ViewModelWidget<TestViewModel> {
         body: Column(
           children: [
             Text('Counter: ${viewModel.counter.value}'),
-            TextButton(onPressed: () => viewModel.counter.value++, child: const Text('Increment')),
+            TextButton(
+                onPressed: () => viewModel.counter.value++,
+                child: const Text('Increment')),
           ],
         ),
       ),
@@ -37,7 +39,8 @@ void main() {
     expect(find.text('Counter: 1'), findsOneWidget);
   });
 
-  testWidgets("ViewModelWidget increments counter value multiple times", (tester) async {
+  testWidgets("ViewModelWidget increments counter value multiple times",
+      (tester) async {
     await tester.pumpWidget(TestViewModelWidget(create: () => TestViewModel()));
     await tester.tap(find.text('Increment'));
     await tester.pump();
@@ -46,16 +49,19 @@ void main() {
     expect(find.text('Counter: 2'), findsOneWidget);
   });
 
-  testWidgets("ViewModelWidget maintains state across rebuilds", (tester) async {
+  testWidgets("ViewModelWidget maintains state across rebuilds",
+      (tester) async {
     final viewModel = TestViewModel();
     await tester.pumpWidget(TestViewModelWidget(create: () => viewModel));
     await tester.tap(find.text('Increment'));
     await tester.pump();
-    await tester.pumpWidget(TestViewModelWidget(create: () => viewModel)); // Rebuild
+    await tester
+        .pumpWidget(TestViewModelWidget(create: () => viewModel)); // Rebuild
     expect(find.text('Counter: 1'), findsOneWidget);
   });
 
-  testWidgets("ViewModelWidget resets state with new ViewModel instance", (tester) async {
+  testWidgets("ViewModelWidget resets state with new ViewModel instance",
+      (tester) async {
     await tester.pumpWidget(TestViewModelWidget(create: () => TestViewModel()));
     await tester.tap(find.text('Increment'));
     await tester.pumpAndSettle();

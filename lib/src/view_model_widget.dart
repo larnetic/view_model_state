@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart' show BuildContext, State, StatefulWidget, Widget, ListenableBuilder;
+import 'package:flutter/widgets.dart'
+    show BuildContext, State, StatefulWidget, Widget, ListenableBuilder;
 import 'view_model.dart';
 
 /// A widget that is bound to a [ViewModel].
@@ -64,7 +65,8 @@ abstract class ViewModelWidget<V extends ViewModel> extends StatefulWidget {
   State<ViewModelWidget> createState() => _ViewModelWidgetState<V>();
 }
 
-class _ViewModelWidgetState<V extends ViewModel> extends State<ViewModelWidget<V>> {
+class _ViewModelWidgetState<V extends ViewModel>
+    extends State<ViewModelWidget<V>> {
   late final V viewModel;
 
   @override
@@ -75,7 +77,9 @@ class _ViewModelWidgetState<V extends ViewModel> extends State<ViewModelWidget<V
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(listenable: viewModel, builder: (context, child) => widget.build(context, viewModel));
+    return ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, child) => widget.build(context, viewModel));
   }
 
   @override
