@@ -1,0 +1,34 @@
+name: 👀 Check Pull Request
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    name: 👀 Check Pull Request
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v3
+      
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          cache: true
+          flutter-version: 'stable'
+      
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: 🔍 Analyze Code
+        run: flutter analyze
+
+      - name: 🧪 Run Tests
+        run: flutter test --coverage
+
+      - name: 📊 Generate Coverage Report
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: larnetic/view_model_state
