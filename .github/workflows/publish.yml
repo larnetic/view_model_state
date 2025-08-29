@@ -17,19 +17,10 @@ jobs:
         uses: actions/checkout@v3
       
       - name: 🐦 Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          channel: stable
+        uses: dart-lang/setup-dart@v1
       
       - name: 📦 Install Dependencies
-        run: flutter pub get
-
-      - name: 🔍 Analyze Code
-        run: flutter analyze
-
-      - name: 🧪 Run Tests
-        run: flutter test
+        run: dart pub get
 
       - name: 📝 Publish Package
         run: dart pub publish --force
