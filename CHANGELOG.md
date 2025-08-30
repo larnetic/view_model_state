@@ -1,3 +1,6 @@
+## 0.0.5
+Add `onUpdate` callback to `ViewModel`.
+
 ## 0.0.4
 Pipeline fixes
 
