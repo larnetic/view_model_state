@@ -37,6 +37,9 @@ import 'states.dart';
 abstract class ViewModel extends ChangeNotifier {
   final _disposeCallbacks = List<Function>.empty(growable: true);
 
+  /// Registers a [callback] to be called when the ViewModel is disposed.
+  /// This can be used to clean up resources such as stream subscriptions
+  /// or listeners on ValueNotifiers.
   void addDisposeCallback(Function callback) {
     _disposeCallbacks.add(callback);
   }
@@ -50,8 +53,18 @@ abstract class ViewModel extends ChangeNotifier {
     super.dispose();
   }
 
+  /// Override this method to perform actions whenever the ViewModel is updated.
+  /// This method is called before notifying listeners of changes.
+  /// It can be used to perform side effects or additional logic when the state changes.
+  ///
+  /// Make sure to not call [notifyListeners] within this method to avoid infinite loops.
+  void onUpdate() {}
+
   @override
-  void notifyListeners() => super.notifyListeners();
+  void notifyListeners() {
+    onUpdate();
+    super.notifyListeners();
+  }
 }
 
 extension StateHelpers on ViewModel {
@@ -88,8 +101,7 @@ extension StateHelpers on ViewModel {
   ///   // Creates a mutable list initialized with some values.
   ///   late final numbers = createMutableStateList<int>([1, 2, 3]);
   /// }
-  MutableViewModelStateList<T> createMutableStateList<T>(
-      [List<T> initial = const []]) {
+  MutableViewModelStateList<T> createMutableStateList<T>([List<T> initial = const []]) {
     return MutableViewModelStateList<T>(this, initial);
   }
 
@@ -108,8 +120,7 @@ extension StateHelpers on ViewModel {
   ///   // Creates a mutable map initialized with some values.
   ///   late final numbers = createMutableStateList<String, int>({"one": 1, "two": 2});
   /// }
-  MutableViewModelStateMap<K, V> createMutableStateMap<K, V>(
-      [Map<K, V> initial = const {}]) {
+  MutableViewModelStateMap<K, V> createMutableStateMap<K, V>([Map<K, V> initial = const {}]) {
     return MutableViewModelStateMap<K, V>(this, initial);
   }
 
