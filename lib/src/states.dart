@@ -1,5 +1,7 @@
 import 'dart:collection' show ListBase, MapBase;
 
+import 'package:flutter/foundation.dart';
+
 import 'view_model.dart' show ViewModel;
 
 /// An interface representing a state managed by a [ViewModel].
@@ -35,6 +37,18 @@ class MutableViewModelState<T> implements ViewModelState<T> {
 
   @override
   T get value => _value;
+
+  @override
+  int get hashCode => _value.hashCode;
+
+  @override
+  bool operator ==(covariant MutableViewModelState other) {
+    if (identical(this, other)) return true;
+    return other._value == _value;
+  }
+
+  @override
+  String toString() => 'MutableViewModelState(value: $_value)';
 }
 
 /// A mutable list state that holds a list of items of type [T].
@@ -80,6 +94,18 @@ class MutableViewModelStateList<T> extends ListBase<T> {
     _list[index] = value;
     _model.notifyListeners();
   }
+
+  @override
+  int get hashCode => _list.hashCode;
+
+  @override
+  bool operator ==(covariant MutableViewModelStateList other) {
+    if (identical(this, other)) return true;
+    return listEquals(_list, other._list);
+  }
+
+  @override
+  String toString() => 'MutableViewModelStateList(list: $_list)';
 }
 
 /// A mutable map state that holds a map of keys of type [K] and values of type [V].
@@ -127,4 +153,16 @@ class MutableViewModelStateMap<K, V> extends MapBase<K, V> {
     }
     return null;
   }
+
+  @override
+  int get hashCode => _map.hashCode;
+
+  @override
+  bool operator ==(covariant MutableViewModelStateMap other) {
+    if (identical(this, other)) return true;
+    return mapEquals(_map, other._map);
+  }
+
+  @override
+  String toString() => 'MutableViewModelStateMap(map: $_map)';
 }
