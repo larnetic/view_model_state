@@ -1,3 +1,7 @@
+## 0.0.6
+- Add `onDispose` callback to `ViewModel`
+- Include toString for states
+
 ## 0.0.5
 Add `onUpdate` callback to `ViewModel`.
 
