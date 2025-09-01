@@ -1,5 +1,8 @@
-import 'package:flutter/widgets.dart'
-    show BuildContext, State, StatefulWidget, Widget, ListenableBuilder;
+import 'dart:ui';
+
+import 'package:flutter/foundation.dart' show ChangeNotifier, Listenable;
+import 'package:flutter/widgets.dart' show BuildContext, ListenableBuilder, State, StatefulWidget, Widget;
+import 'package:view_model_state/src/state_scope.dart';
 import 'view_model.dart';
 
 /// A widget that is bound to a [ViewModel].
@@ -54,8 +57,8 @@ import 'view_model.dart';
 ///   }
 /// }
 /// ```
-abstract class ViewModelWidget<V extends ViewModel> extends StatefulWidget {
-  const ViewModelWidget({super.key, required this.create});
+abstract class ViewModelWidget<V extends ViewModel> extends StatefulWidget with StateScope {
+  ViewModelWidget({super.key, required this.create});
 
   final V Function() create;
 
@@ -65,8 +68,7 @@ abstract class ViewModelWidget<V extends ViewModel> extends StatefulWidget {
   State<ViewModelWidget> createState() => _ViewModelWidgetState<V>();
 }
 
-class _ViewModelWidgetState<V extends ViewModel>
-    extends State<ViewModelWidget<V>> {
+class _ViewModelWidgetState<V extends ViewModel> extends State<ViewModelWidget<V>> {
   late final V viewModel;
 
   @override
@@ -78,13 +80,59 @@ class _ViewModelWidgetState<V extends ViewModel>
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) => widget.build(context, viewModel));
+      listenable: _CompositeListenable([viewModel, widget]),
+      builder: (context, child) => widget.build(context, viewModel),
+    );
   }
 
   @override
   void dispose() {
-    viewModel.dispose();
+    widget.dispose();
+    super.dispose();
+  }
+}
+
+class _CompositeListenable extends Listenable {
+  final List<ChangeNotifier> notifiers;
+
+  _CompositeListenable(this.notifiers);
+
+  @override
+  void addListener(VoidCallback listener) {
+    for (final notifier in notifiers) {
+      notifier.addListener(listener);
+    }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    for (final notifier in notifiers) {
+      notifier.removeListener(listener);
+    }
+  }
+}
+
+abstract class StateScopeWidget extends StatefulWidget with StateScope {
+  StateScopeWidget({super.key});
+
+  Widget build(BuildContext context);
+
+  @override
+  State<StateScopeWidget> createState() => _StateScopeWidgetState();
+}
+
+class _StateScopeWidgetState extends State<StateScopeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: widget,
+      builder: (context, child) => widget.build(context),
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.dispose();
     super.dispose();
   }
 }

@@ -6,12 +6,18 @@ class MyViewModel extends ViewModel {
 }
 
 void main() {
-  runApp(MaterialApp(
-      title: "Counter Demo", home: MyApp(create: () => MyViewModel())));
+  runApp(
+    MaterialApp(
+      title: "Counter Demo",
+      home: MyApp(
+        create: () => MyViewModel(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends ViewModelWidget<MyViewModel> {
-  const MyApp({super.key, required super.create});
+  MyApp({super.key, required super.create});
 
   @override
   Widget build(BuildContext context, MyViewModel viewModel) {
