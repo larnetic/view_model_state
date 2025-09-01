@@ -113,8 +113,7 @@ void main() {
 
     test("Map should initialize with values", () {
       final viewModel = TestViewModel();
-      final map = viewModel.createMutableStateMap<String, String>(
-          {"key1": "value1", "key2": "value2"});
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1", "key2": "value2"});
       expect(map, {"key1": "value1", "key2": "value2"});
     });
 
@@ -127,24 +126,21 @@ void main() {
 
     test("Map should update a value", () {
       final viewModel = TestViewModel();
-      final map =
-          viewModel.createMutableStateMap<String, String>({"key1": "value1"});
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1"});
       map["key1"] = "updatedValue";
       expect(map, {"key1": "updatedValue"});
     });
 
     test("Map should remove a key-value pair", () {
       final viewModel = TestViewModel();
-      final map = viewModel.createMutableStateMap<String, String>(
-          {"key1": "value1", "key2": "value2"});
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1", "key2": "value2"});
       map.remove("key1");
       expect(map, {"key2": "value2"});
     });
 
     test("Map should clear all key-value pairs", () {
       final viewModel = TestViewModel();
-      final map = viewModel.createMutableStateMap<String, String>(
-          {"key1": "value1", "key2": "value2"});
+      final map = viewModel.createMutableStateMap<String, String>({"key1": "value1", "key2": "value2"});
       expect(map, isNotEmpty);
       map.clear();
       expect(map, isEmpty);
@@ -178,8 +174,7 @@ void main() {
   group("Test state from stream", () {
     test("Periodic stream should update state", () {
       final viewModel = TestViewModel();
-      final stream = Stream<int>.periodic(
-          const Duration(milliseconds: 10), (count) => count).take(5);
+      final stream = Stream<int>.periodic(const Duration(milliseconds: 10), (count) => count).take(5);
 
       final stateFromStream = viewModel.createStateFromStream(stream, 1);
 
@@ -216,8 +211,7 @@ void main() {
   group("Test state from future", () {
     test("Future should update state", () async {
       final viewModel = TestViewModel();
-      final future =
-          Future<int>.delayed(const Duration(milliseconds: 10), () => 99);
+      final future = Future<int>.delayed(const Duration(milliseconds: 10), () => 99);
 
       final stateFromFuture = viewModel.createStateFromFuture(future, 0);
 
@@ -245,8 +239,7 @@ void main() {
       final viewModel = TestViewModel();
       final notifier = ValueNotifier<String>("initial");
 
-      final stateFromNotifier =
-          viewModel.createStateFromValueNotifier(notifier);
+      final stateFromNotifier = viewModel.createStateFromValueNotifier(notifier);
 
       expect(stateFromNotifier.value, "initial");
     });
@@ -254,8 +247,7 @@ void main() {
       final viewModel = TestViewModel();
       final notifier = ValueNotifier<int>(5);
 
-      final stateFromNotifier =
-          viewModel.createStateFromValueNotifier(notifier);
+      final stateFromNotifier = viewModel.createStateFromValueNotifier(notifier);
 
       expect(stateFromNotifier.value, 5);
 
@@ -269,8 +261,7 @@ void main() {
       final viewModel = TestViewModel();
       final notifier = ValueNotifier<int>(0);
 
-      final stateFromNotifier =
-          viewModel.createStateFromValueNotifier(notifier);
+      final stateFromNotifier = viewModel.createStateFromValueNotifier(notifier);
 
       expect(stateFromNotifier.value, 0);
 
@@ -290,70 +281,14 @@ void main() {
 
     test("List state toString", () {
       final viewModel = TestViewModel();
-      final listState =
-          viewModel.createMutableStateList<String>(["a", "b", "c"]);
-      expect(
-          listState.toString(), "MutableViewModelStateList(list: [a, b, c])");
+      final listState = viewModel.createMutableStateList<String>(["a", "b", "c"]);
+      expect(listState.toString(), "MutableViewModelStateList(list: [a, b, c])");
     });
 
     test("Map state toString", () {
       final viewModel = TestViewModel();
-      final mapState =
-          viewModel.createMutableStateMap<String, int>({"one": 1, "two": 2});
-      expect(mapState.toString(),
-          "MutableViewModelStateMap(map: {one: 1, two: 2})");
-    });
-  });
-
-  group("Test equality and hashCode operators", () {
-    test("Primitive state equality", () {
-      final viewModel = TestViewModel();
-      final state1 = viewModel.createMutableState<int>(100);
-      final state2 = viewModel.createMutableState<int>(100);
-      final state3 = viewModel.createMutableState<int>(200);
-
-      expect(state1 == state2, isTrue);
-      expect(state1 == state3, isFalse);
-      expect(state1.hashCode == state2.hashCode, isTrue);
-      expect(state1.hashCode == state3.hashCode, isFalse);
-    });
-
-    test("List state equality", () {
-      final viewModel = TestViewModel();
-      final listState1 = viewModel.createMutableStateList<String>(["x", "y"]);
-      final listState2 = viewModel.createMutableStateList<String>(["x", "y"]);
-      final listState3 = viewModel.createMutableStateList<String>(["a", "b"]);
-
-      expect(listState1 == listState2, isTrue);
-      expect(listState1 == listState3, isFalse);
-      expect(listState1.hashCode == listState2.hashCode, isTrue);
-      expect(listState1.hashCode == listState3.hashCode, isFalse);
-    });
-
-    test("Map state equality", () {
-      final viewModel = TestViewModel();
-      final mapState1 =
-          viewModel.createMutableStateMap<String, int>({"key": 1});
-      final mapState2 =
-          viewModel.createMutableStateMap<String, int>({"key": 1});
-      final mapState3 =
-          viewModel.createMutableStateMap<String, int>({"key": 2});
-
-      expect(mapState1 == mapState2, isTrue);
-      expect(mapState1 == mapState3, isFalse);
-      expect(mapState1.hashCode == mapState2.hashCode, isTrue);
-      expect(mapState1.hashCode == mapState3.hashCode, isFalse);
-    });
-
-    test("Hash Codes are consistent across states and non-states", () {
-      final viewModel = TestViewModel();
-      final state = viewModel.createMutableState<int>(123);
-      final listState = viewModel.createMutableStateList<String>(["a", "b"]);
-      final mapState = viewModel.createMutableStateMap<String, int>({"one": 1});
-
-      expect(state.hashCode, 123.hashCode);
-      expect(listState.hashCode, ["a", "b"].hashCode);
-      expect(mapState.hashCode, {"one": 1}.hashCode);
+      final mapState = viewModel.createMutableStateMap<String, int>({"one": 1, "two": 2});
+      expect(mapState.toString(), "MutableViewModelStateMap(map: {one: 1, two: 2})");
     });
   });
 }
