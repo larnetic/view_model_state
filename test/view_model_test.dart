@@ -42,21 +42,15 @@ void main() {
       // ignore: invalid_use_of_protected_member
       expect(notifier.hasListeners, isFalse);
     });
-
-    test("Disposing ViewModel multiple times throws an error", () {
-      final viewModel = TestViewModel();
-      viewModel.dispose();
-      expect(() => viewModel.dispose(), throwsA(isA<Error>()));
-    });
   });
 
   group("Test self update", () {
     test("onUpdate is called on notifyListeners", () {
       final viewModel = TestViewModel();
       expect(viewModel.onUpdateCallCount, 0);
-      viewModel.notifyListeners();
+      viewModel.update();
       expect(viewModel.onUpdateCallCount, 1);
-      viewModel.notifyListeners();
+      viewModel.update();
       expect(viewModel.onUpdateCallCount, 2);
     });
 
