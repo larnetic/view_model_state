@@ -46,11 +46,18 @@ abstract class ViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    onDispose();
     for (final callback in _disposeCallbacks) {
       callback();
     }
     _disposeCallbacks.clear();
     super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    onUpdate();
+    super.notifyListeners();
   }
 
   /// Override this method to perform actions whenever the ViewModel is updated.
@@ -60,11 +67,12 @@ abstract class ViewModel extends ChangeNotifier {
   /// Make sure to not call [notifyListeners] within this method to avoid infinite loops.
   void onUpdate() {}
 
-  @override
-  void notifyListeners() {
-    onUpdate();
-    super.notifyListeners();
-  }
+  /// Override this method to perform actions when the ViewModel is disposed.
+  /// This method is called before the disposal callbacks are executed.
+  /// It can be used to perform any necessary cleanup or finalization logic.
+  ///
+  /// Make sure to call `super.onDispose()` if you override this method.
+  void onDispose() {}
 }
 
 extension StateHelpers on ViewModel {
