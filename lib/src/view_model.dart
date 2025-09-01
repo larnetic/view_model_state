@@ -109,7 +109,8 @@ extension StateHelpers on ViewModel {
   ///   // Creates a mutable list initialized with some values.
   ///   late final numbers = createMutableStateList<int>([1, 2, 3]);
   /// }
-  MutableViewModelStateList<T> createMutableStateList<T>([List<T> initial = const []]) {
+  MutableViewModelStateList<T> createMutableStateList<T>(
+      [List<T> initial = const []]) {
     return MutableViewModelStateList<T>(this, initial);
   }
 
@@ -128,7 +129,8 @@ extension StateHelpers on ViewModel {
   ///   // Creates a mutable map initialized with some values.
   ///   late final numbers = createMutableStateList<String, int>({"one": 1, "two": 2});
   /// }
-  MutableViewModelStateMap<K, V> createMutableStateMap<K, V>([Map<K, V> initial = const {}]) {
+  MutableViewModelStateMap<K, V> createMutableStateMap<K, V>(
+      [Map<K, V> initial = const {}]) {
     return MutableViewModelStateMap<K, V>(this, initial);
   }
 
