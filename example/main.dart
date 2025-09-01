@@ -6,7 +6,8 @@ class MyViewModel extends ViewModel {
 }
 
 void main() {
-  runApp(MaterialApp(title: "Counter Demo", home: MyApp(create: () => MyViewModel())));
+  runApp(MaterialApp(
+      title: "Counter Demo", home: MyApp(create: () => MyViewModel())));
 }
 
 class MyApp extends ViewModelWidget<MyViewModel> {

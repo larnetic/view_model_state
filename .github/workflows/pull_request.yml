@@ -24,6 +24,9 @@ jobs:
       - name: 🔍 Analyze Code
         run: flutter analyze
 
+      - name: 🔧 Format Check
+        run: dart format -o none --set-exit-if-changed .
+
       - name: 🧪 Run Tests
         run: flutter test --coverage
 

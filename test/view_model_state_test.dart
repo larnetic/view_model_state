@@ -280,4 +280,28 @@ void main() {
       }
     });
   });
+
+  group("Test toString implementations", () {
+    test("Primitive state toString", () {
+      final viewModel = TestViewModel();
+      final state = viewModel.createMutableState<int>(42);
+      expect(state.toString(), "MutableViewModelState(value: 42)");
+    });
+
+    test("List state toString", () {
+      final viewModel = TestViewModel();
+      final listState =
+          viewModel.createMutableStateList<String>(["a", "b", "c"]);
+      expect(
+          listState.toString(), "MutableViewModelStateList(list: [a, b, c])");
+    });
+
+    test("Map state toString", () {
+      final viewModel = TestViewModel();
+      final mapState =
+          viewModel.createMutableStateMap<String, int>({"one": 1, "two": 2});
+      expect(mapState.toString(),
+          "MutableViewModelStateMap(map: {one: 1, two: 2})");
+    });
+  });
 }

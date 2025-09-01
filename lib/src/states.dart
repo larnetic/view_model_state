@@ -35,6 +35,9 @@ class MutableViewModelState<T> implements ViewModelState<T> {
 
   @override
   T get value => _value;
+
+  @override
+  String toString() => 'MutableViewModelState(value: $_value)';
 }
 
 /// A mutable list state that holds a list of items of type [T].
@@ -80,6 +83,9 @@ class MutableViewModelStateList<T> extends ListBase<T> {
     _list[index] = value;
     _model.notifyListeners();
   }
+
+  @override
+  String toString() => 'MutableViewModelStateList(list: $_list)';
 }
 
 /// A mutable map state that holds a map of keys of type [K] and values of type [V].
@@ -127,4 +133,7 @@ class MutableViewModelStateMap<K, V> extends MapBase<K, V> {
     }
     return null;
   }
+
+  @override
+  String toString() => 'MutableViewModelStateMap(map: $_map)';
 }
