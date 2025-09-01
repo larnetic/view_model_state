@@ -12,11 +12,11 @@ and the Flutter guide for
 -->
 
 <p align="center">
-    <strong>✨ State Management made simple ✨</strong>
+    <strong>✨DISCONTINUED✨</strong>
 </p>
 
 <p align="center">
-    Define state in your ViewModels and do not worry about your UI updating, <strong>this will do it for you.</strong>
+    Please use <a href="https://github.com/larnetic/scoped_state">this</a> instead.
 </p>
 
 <p align="center">
