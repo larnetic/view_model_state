@@ -16,7 +16,7 @@ and the Flutter guide for
 </p>
 
 <p align="center">
-    Please use <a href="https://github.com/larnetic/scoped_state">this</a> instead.
+    Please use <a href="https://github.com/larnetic/scoped_state">scoped_state</a> instead.
 </p>
 
 <p align="center">
