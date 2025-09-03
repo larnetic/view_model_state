@@ -11,23 +11,6 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
 
-<p align="center">
-    <strong>✨DISCONTINUED✨</strong>
-</p>
-
-<p align="center">
-    Please use <a href="https://github.com/larnetic/scoped_state">scoped_state</a> instead.
-</p>
-
-<p align="center">
-    <a href="https://github.com/larnetic/view_model_state">
-        <img src="https://img.shields.io/github/stars/larnetic/view_model_state">
-    </a>
-    <img alt="Codecov" src="https://img.shields.io/codecov/c/github/larnetic/view_model_state">
-    <img src="https://img.shields.io/pub/v/view_model_state">
-    <img src="https://img.shields.io/github/license/larnetic/view_model_state">
-</p>
-
 # 🥇 Introduction
 > Why does this even exist? Flutter already provides `ChangeNotifier` to imlement MVVM patterns. This provides a clean and concise wrapper, making state much easier.
 
